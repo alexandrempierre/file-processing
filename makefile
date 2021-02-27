@@ -22,5 +22,8 @@ counting_seq: counting_seq.c
 print_results: print_results.c
 	$(CC) -o bin/print_results.o print_results.c $(CFLAGS)
 
+testes: testes.tar.gz
+	tar -xzvf testes.tar.gz
+
 clean:
 	rm *.o *.out
