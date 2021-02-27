@@ -1,4 +1,4 @@
-#include "counting_seq.h"
+#include <counting_seq.h>
 
 int counting_seq (int count, int *query, int buffer[], int buffer_size) {
     int i, q = *query;

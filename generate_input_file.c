@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "common_defs.h"
+#include <common_defs.h>
 
-#include "counting_seq.h"
-#include "single_value.h"
-#include "triplets.h"
+#include <counting_seq.h>
+#include <single_value.h>
+#include <triplets.h>
 
 #define WRITE_BLOCK_SIZE 10
 
