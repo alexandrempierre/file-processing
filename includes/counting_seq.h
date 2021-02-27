@@ -9,6 +9,6 @@ typedef struct
 
 
 counting_seq_data_t new_counting_seq_data();
-int counting_seq (counting_seq_data_t*, int [], int);
+void counting_seq (counting_seq_data_t*, int [], int);
 
 #endif

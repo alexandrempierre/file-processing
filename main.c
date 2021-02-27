@@ -27,13 +27,13 @@ int main(int argc, char const *argv[])
     for (int i = 0; i < BUFFER_SIZE; i++) { buffer[i] = buffer_contents[i]; }
 
     counting_seq_data_t counting_seq_data = new_counting_seq_data();
-    counting_seq_data.count = counting_seq(&counting_seq_data, buffer, buffer_size);
+    counting_seq(&counting_seq_data, buffer, buffer_size);
 
     single_value_data_t single_value_data = new_single_value_data();
     single_value(&single_value_data, buffer, buffer_size);
 
     triplets_data_t triplets_data = new_triplets_data();
-    triplets_data.triplets_count = triplets(&triplets_data, buffer, buffer_size);
+    triplets(&triplets_data, buffer, buffer_size);
 
     print_single_value(&single_value_data);
     print_triplets(&triplets_data);

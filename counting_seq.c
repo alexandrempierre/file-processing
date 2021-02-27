@@ -9,7 +9,7 @@ counting_seq_data_t new_counting_seq_data() {
     return result;
 }
 
-int counting_seq (counting_seq_data_t* data, int buffer[], int buffer_size) {
+void counting_seq (counting_seq_data_t* data, int buffer[], int buffer_size) {
     int query = data->query;
 
     for (int i = 0; i < buffer_size; i++) {
@@ -24,6 +24,4 @@ int counting_seq (counting_seq_data_t* data, int buffer[], int buffer_size) {
     }
 
     data->query = query;
-
-    return data->count;
 }

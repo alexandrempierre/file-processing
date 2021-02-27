@@ -9,6 +9,6 @@ typedef struct
 } triplets_data_t;
 
 triplets_data_t new_triplets_data();
-int triplets (triplets_data_t*, int [], int);
+void triplets (triplets_data_t*, int [], int);
 
 #endif

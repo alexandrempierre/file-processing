@@ -10,7 +10,7 @@ triplets_data_t new_triplets_data() {
     return result;
 }
 
-int triplets (triplets_data_t* data, int buffer[], int buffer_size) {
+void triplets (triplets_data_t* data, int buffer[], int buffer_size) {
     int value = data->value;
     int value_count = data->value_count;
     int triplets_count = data->triplets_count;
@@ -30,6 +30,5 @@ int triplets (triplets_data_t* data, int buffer[], int buffer_size) {
     
     data->value_count = value_count;
     data->value = value;
-
-    return triplets_count;
+    data->triplets_count = triplets_count;
 }
