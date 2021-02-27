@@ -1,4 +1,4 @@
-#include "single_value.h"
+#include <single_value.h>
 
 single_value_data_t new_single_value_data() {
     single_value_data_t result = {
@@ -14,8 +14,6 @@ single_value_data_t new_single_value_data() {
     return result;
 }
 
-// TODO: Start depende do de qual bloco do arquivo está sendo lido e não pode receber o valor de i simplesmente
-// TODO: Como o tamanho do arquivo é um long long, start e count também devem ser long long
 void single_value (single_value_data_t* data, int numbers_before_buffer, int buffer[], int buffer_size) {
     for (int i = 0; i < buffer_size; i++) {
         // NOTE: Nao deve ocorrer

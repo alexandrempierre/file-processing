@@ -6,7 +6,7 @@
 #include <print_results.h>
 
 void print_single_value(single_value_data_t* data) {
-    printf("Maior sequência de valores idênticos: %d %d %d\n", data->start_largest, data->count_largest, data->value_largest);
+    printf("Maior sequência de valores idênticos: %lld %d %d\n", data->start_largest, data->count_largest, data->value_largest);
 }
 
 void print_triplets(triplets_data_t* data) {

@@ -10,18 +10,14 @@ counting_seq_data_t new_counting_seq_data() {
 }
 
 void counting_seq (counting_seq_data_t* data, int buffer[], int buffer_size) {
-    int query = data->query;
-
     for (int i = 0; i < buffer_size; i++) {
-        if (buffer[i] == query) {
-            if (query == 5) data->count++;
+        if (buffer[i] == data->query) {
+            if (data->query == 5) data->count++;
             
-            query = (query + 1) % 6;
+            data->query = (data->query + 1) % 6;
         }
         else {
-            query = 0;
+            data->query = 0;
         }
     }
-
-    data->query = query;
 }

@@ -11,24 +11,16 @@ triplets_data_t new_triplets_data() {
 }
 
 void triplets (triplets_data_t* data, int buffer[], int buffer_size) {
-    int value = data->value;
-    int value_count = data->value_count;
-    int triplets_count = data->triplets_count;
-
     for (int i = 0; i < buffer_size; i++) {
-        if (buffer[i] == value) {
-            if ( ++value_count == 3 ) {
-                triplets_count++;
-                value_count = 0;
+        if (buffer[i] == data->value) {
+            if ( ++data->value_count == 3 ) {
+                data->triplets_count++;
+                data->value_count = 0;
             }
         }
         else {
-            value = buffer[i];
-            value_count = 1;
+            data->value = buffer[i];
+            data->value_count = 1;
         }
     }
-    
-    data->value_count = value_count;
-    data->value = value;
-    data->triplets_count = triplets_count;
 }
