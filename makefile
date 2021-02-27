@@ -1,32 +1,40 @@
 INCLUDES=-Iincludes
-OPTIONS=-Wall --pedantic
+OPTIONS=-Wall --pedantic -g
 
+BUILD_DIR=build
+SRC_DIR=src
+BIN_DIR=bin
+
+SOURCES=$(wildcard $(SRC_DIR)/*.c)
+OBJECTS=$(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SOURCES))
+
+MD=mkdir -p
+RM=rm -f
 CC=gcc
 CFLAGS=$(INCLUDES) $(OPTIONS)
 
-main: counting_seq single_value triplets print_results
-	$(CC) -o main.out counting_seq.o single_value.o triplets.o print_results.o main.c $(CFLAGS)
+$(BIN_DIR)/file_processor: $(OBJECTS) | $(BIN_DIR)
+	$(CC) -o $(BIN_DIR)/file_processor $(OBJECTS) file_processor.c $(CFLAGS)
 
-generate_input_file: counting_seq single_value triplets print_results
-	$(CC) -o generate_input_file.out counting_seq.o single_value.o triplets.o print_results.o generate_input_file.c $(CFLAGS)
+$(BIN_DIR)/generate_input_file: $(OBJECTS) | $(BIN_DIR)
+	$(CC) -o $(BIN_DIR)/generate_input_file $(OBJECTS) generate_input_file.c $(CFLAGS)
 
-triplets: triplets.c
-	$(CC) -o triplets.o triplets.c -c $(CFLAGS)
+generate_input_file: $(BIN_DIR)/generate_input_file ;
 
-single_value: single_value.c
-	$(CC) -o single_value.o single_value.c -c $(CFLAGS)
+$(OBJECTS): $(BUILD_DIR)/%.o : $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -c $< $(LIB_PATH) $(LIBS) -o $@
 
-counting_seq: counting_seq.c
-	$(CC) -o counting_seq.o counting_seq.c -c $(CFLAGS)
+$(BUILD_DIR):
+	$(MD) $(BUILD_DIR)
 
-print_results: print_results.c
-	$(CC) -o print_results.o print_results.c -c $(CFLAGS)
+$(BIN_DIR):
+	$(MD) $(BIN_DIR)
 
-buffer: buffer.c
-	$(CC) -o buffer.o buffer.c $(CFLAGS)
+file.txt:
+	touch file.txt
 
 testes: testes.tar.gz
 	tar -xzvf testes.tar.gz
 
 clean:
-	rm *.o *.out
+	$(RM) $(BUILD_DIR)/* $(BIN_DIR)/*
