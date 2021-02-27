@@ -2,9 +2,13 @@
 
 single_value_data_t new_single_value_data() {
     single_value_data_t result = {
-        .count = 0,
-        .start = 0,
-        .value = -1
+        .count_largest = 0,
+        .start_largest = 0,
+        .value_largest = -1,
+
+        .count_current = 0,
+        .start_current = 0,
+        .value_current = -1
     };
 
     return result;
@@ -12,29 +16,22 @@ single_value_data_t new_single_value_data() {
 
 // TODO: Start depende do de qual bloco do arquivo está sendo lido e não pode receber o valor de i simplesmente
 // TODO: Como o tamanho do arquivo é um long long, start e count também devem ser long long
-void single_value (single_value_data_t* data, int buffer[], int buffer_size) {
-    int start = data->start;
-    int count = data->count;
-    int value = -1;
-
-    // TODO: Não entendi essa linha. V não deveria ser sempre value?
-    if ( (start + count) % buffer_size == 0 ) value = data->value;
-
+void single_value (single_value_data_t* data, int numbers_before_buffer, int buffer[], int buffer_size) {
     for (int i = 0; i < buffer_size; i++) {
         // NOTE: Nao deve ocorrer
         if (buffer[i] < 0 || buffer[i] > 5) continue;
 
-        if (buffer[i] == value) count++;
+        if (buffer[i] == data->value_current) data->count_current++;
         else {
-            if (count > data->count) {
-                data->count = count;
-                data->start = start;
-                data->value = value;
+            if (data->count_current > data->count_largest) {
+                data->count_largest = data->count_current;
+                data->start_largest = data->start_current;
+                data->value_largest = data->value_current;
             }
 
-            value = buffer[i];
-            count = 1;
-            start = i+1;
+            data->value_current = buffer[i];
+            data->count_current = 1;
+            data->start_current = numbers_before_buffer + i + 1;
         }
     }
 }
