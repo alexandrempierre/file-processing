@@ -11,7 +11,7 @@ OBJECTS=$(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SOURCES))
 MD=mkdir -p
 RM=rm -f
 CC=gcc
-CFLAGS=$(INCLUDES) $(OPTIONS)
+CFLAGS=$(INCLUDES) $(OPTIONS) -lpthread
 
 $(BIN_DIR)/file_processor: $(OBJECTS) | $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/file_processor $(OBJECTS) file_processor.c $(CFLAGS)

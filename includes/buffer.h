@@ -20,8 +20,8 @@ typedef struct
 } circular_buffer_t;
 
 
-buffer_block_t new_buffer_block();
-circular_buffer_t new_circular_buffer();
+buffer_block_t new_buffer_block(int*, llint);
+circular_buffer_t new_circular_buffer(llint);
 
 bool is_full(circular_buffer_t*);
 bool is_empty(circular_buffer_t*);
