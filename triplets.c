@@ -1,22 +1,35 @@
 #include "triplets.h"
 
-int triplets (int *value, int *count_val, int count_triplets, int buffer[], int buffer_size) {
-    int i, v = *value, cv = *count_val, ct = count_triplets;
+triplets_data_t new_triplets_data() {
+    triplets_data_t result = {
+        .triplets_count = 0,
+        .value_count = 0,
+        .value = -1
+    };
 
-    for (i = 0; i < buffer_size; i++) {
-        if (buffer[i] == v) {
-            if ( ++cv == 3 ) {
-                ct++;
-                cv = 0;
+    return result;
+}
+
+int triplets (triplets_data_t* data, int buffer[], int buffer_size) {
+    int value = data->value;
+    int value_count = data->value_count;
+    int triplets_count = data->triplets_count;
+
+    for (int i = 0; i < buffer_size; i++) {
+        if (buffer[i] == value) {
+            if ( ++value_count == 3 ) {
+                triplets_count++;
+                value_count = 0;
             }
         }
         else {
-            v = buffer[i];
-            cv = 1;
+            value = buffer[i];
+            value_count = 1;
         }
     }
     
-    *count_val = cv; *value = v;
+    data->value_count = value_count;
+    data->value = value;
 
-    return ct;
+    return triplets_count;
 }

@@ -1,4 +1,14 @@
 #ifndef COUNTING_SEQ_H
 #define COUNTING_SEQ_H
-    int counting_seq (int, int *, int [], int);
+
+typedef struct
+{
+    int count;
+    int query;
+} counting_seq_data_t;
+
+
+counting_seq_data_t new_counting_seq_data();
+int counting_seq (counting_seq_data_t*, int [], int);
+
 #endif

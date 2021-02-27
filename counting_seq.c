@@ -1,20 +1,29 @@
 #include <counting_seq.h>
 
-int counting_seq (int count, int *query, int buffer[], int buffer_size) {
-    int i, q = *query;
+counting_seq_data_t new_counting_seq_data() {
+    counting_seq_data_t result = {
+        .count = 0,
+        .query = 0
+    };
 
-    for (i = 0; i < buffer_size; i++) {
-        if (buffer[i] == q) {
-            if (q == 5) count++;
+    return result;
+}
+
+int counting_seq (counting_seq_data_t* data, int buffer[], int buffer_size) {
+    int query = data->query;
+
+    for (int i = 0; i < buffer_size; i++) {
+        if (buffer[i] == query) {
+            if (query == 5) data->count++;
             
-            q = (q + 1) % 6;
+            query = (query + 1) % 6;
         }
         else {
-            q = 0;
+            query = 0;
         }
     }
 
-    *query = q;
+    data->query = query;
 
-    return count;
+    return data->count;
 }
