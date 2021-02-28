@@ -2,6 +2,7 @@
 #define THREADS_h
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <pthread.h>
 
 #include <common_defs.h>
@@ -14,8 +15,12 @@ typedef struct
     pthread_mutex_t mutex;
     pthread_cond_t empty_buffer_cond;
     pthread_cond_t full_buffer_cond;
+    pthread_cond_t consumer_barrier_cond;
 
     circular_buffer_t* buffer;
+    bool no_more_work;
+    bool file_has_ended;
+    int consumers_on_barrier;
 } thread_data_t;
 
 typedef struct

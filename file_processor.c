@@ -11,9 +11,9 @@
 
 #define N_CONSUMERS 3
 
-// void *counting (void *);
-// void *triplets (void *);
-// void *single_value (void *);
+counting_seq_data_t counting_seq_data;
+single_value_data_t single_value_data;
+triplets_data_t triplets_data;
 
 void counting_seq_action(buffer_block_t*);
 void triplets_action(buffer_block_t*);
@@ -21,26 +21,6 @@ void single_value_action(buffer_block_t*);
 
 int main(int argc, char const *argv[])
 {
-    #if 0
-
-    int buffer_contents[] = {1, 2, 3, 1, 1, 1, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 3, 3, 3, 0, 1, 2, 3, 4, 5, 0};
-
-    for (int i = 0; i < BUFFER_SIZE; i++) { buffer[i] = buffer_contents[i]; }
-
-    counting_seq_data_t counting_seq_data = new_counting_seq_data();
-    single_value_data_t single_value_data = new_single_value_data();
-    triplets_data_t triplets_data = new_triplets_data();
-    
-    counting_seq(&counting_seq_data, buffer, buffer_size);
-    single_value(&single_value_data, 0, buffer, buffer_size);
-    triplets(&triplets_data, buffer, buffer_size);
-
-    print_single_value(&single_value_data);
-    print_triplets(&triplets_data);
-    print_counting_seq(&counting_seq_data);
-
-    #endif
-
     // TODO: Get file name and sizes from command line arguments
     llint buffer_capacity = 10;
     llint buffer_block_size = 10;
@@ -52,6 +32,10 @@ int main(int argc, char const *argv[])
         printf("Could not open: %s\n", file_name);
         exit(1);
     }
+
+    counting_seq_data = new_counting_seq_data();
+    single_value_data = new_single_value_data();
+    triplets_data = new_triplets_data();
 
     circular_buffer_t buffer = new_circular_buffer(buffer_capacity);
     thread_data_t shared_data = new_thread_data(&buffer);
@@ -71,17 +55,25 @@ int main(int argc, char const *argv[])
         pthread_join(pids[i], NULL);
     }
 
+    print_single_value(&single_value_data);
+    print_triplets(&triplets_data);
+    print_counting_seq(&counting_seq_data);
+
+    delete_thread_data(&shared_data);
+    fclose(file);
+
     return 0;
 }
 
 void counting_seq_action(buffer_block_t* block) {
-
+    counting_seq(&counting_seq_data, block->block_data, block->block_size);
 }
-void triplets_action(buffer_block_t* block) {
 
+void triplets_action(buffer_block_t* block) {
+    single_value(&single_value_data, block->numbers_already_read, block->block_data, block->block_size);
 }
 
 void single_value_action(buffer_block_t* block) {
-
+    triplets(&triplets_data, block->block_data, block->block_size);
 }
 

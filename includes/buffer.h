@@ -9,6 +9,7 @@ typedef struct
 {
     int* block_data;
     llint block_size;
+    llint numbers_already_read;
 } buffer_block_t;
 
 typedef struct
@@ -20,7 +21,7 @@ typedef struct
 } circular_buffer_t;
 
 
-buffer_block_t new_buffer_block(int*, llint);
+buffer_block_t new_buffer_block(int*, llint, llint);
 circular_buffer_t new_circular_buffer(llint);
 
 bool is_full(circular_buffer_t*);

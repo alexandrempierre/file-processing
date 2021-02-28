@@ -6,10 +6,11 @@
 #include <buffer.h>
 
 
-buffer_block_t new_buffer_block(int* block_data, llint block_size) {
+buffer_block_t new_buffer_block(int* data, llint size, llint numbers_already_read) {
     buffer_block_t block = {
-        .block_data = block_data,
-        .block_size = block_size
+        .block_data = data,
+        .block_size = size,
+        .numbers_already_read = numbers_already_read
     };
 
     return block;
@@ -20,7 +21,7 @@ circular_buffer_t new_circular_buffer(llint capacity) {
         .buffer_capacity = capacity,
         .buffer_data = (buffer_block_t*) malloc(capacity * sizeof(buffer_block_t)),
         .buffer_count = 0,
-        .start_index = 0,
+        .start_index = 0
     };
 
     return buffer;
