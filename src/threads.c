@@ -60,8 +60,7 @@ void put_block_into_buffer(thread_data_t* thread_data, buffer_block_t block) {
 
     enqueue_block(buffer, block);
 
-    // TODO: Should this be a broadcast?
-    pthread_cond_signal(&thread_data->empty_buffer_cond);
+    pthread_cond_broadcast(&thread_data->empty_buffer_cond);
     pthread_mutex_unlock(&thread_data->mutex);
 }
 
