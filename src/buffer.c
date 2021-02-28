@@ -38,7 +38,7 @@ bool is_empty(circular_buffer_t* buffer) {
 void enqueue_block(circular_buffer_t* buffer, buffer_block_t block) {
     assert(!is_full(buffer));
 
-    llint current_index = buffer-> buffer_count % buffer->buffer_capacity;
+    llint current_index = (buffer->start_index + buffer->buffer_count) % buffer->buffer_capacity;
     buffer->buffer_data[current_index] = block;
 
     buffer->buffer_count++;
