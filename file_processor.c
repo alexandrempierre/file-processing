@@ -21,13 +21,16 @@ void single_value_action(buffer_block_t*);
 
 int main(int argc, char const *argv[])
 {
-    // TODO: Get file name and sizes from command line arguments
-    llint buffer_capacity = 10;
-    llint buffer_block_size = 10;
+    if(argc < 4) {
+        printf("Usage: %s <BLOCK_SIZE: N> <NUMBER_OF_BLOCKS: M> <INPUT_FILE>\n", argv[0]);
+        exit(1);
+    }
 
-    char* file_name = "test.input";
+    llint buffer_block_size = atoll(argv[1]);
+    llint buffer_capacity = atoll(argv[2]);
+    const char* file_name = argv[3];
+
     FILE* file = fopen(file_name, "rb");
-
     if(file == NULL) {
         printf("Could not open: %s\n", file_name);
         exit(1);
