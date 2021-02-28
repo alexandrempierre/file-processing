@@ -13,10 +13,10 @@ RM=rm -f
 CC=gcc
 CFLAGS=$(INCLUDES) $(OPTIONS) -lpthread
 
-$(BIN_DIR)/file_processor: $(OBJECTS) | $(BIN_DIR)
+$(BIN_DIR)/file_processor: $(OBJECTS) file_processor.c | $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/file_processor $(OBJECTS) file_processor.c $(CFLAGS)
 
-$(BIN_DIR)/generate_input_file: $(OBJECTS) | $(BIN_DIR)
+$(BIN_DIR)/generate_input_file: $(OBJECTS) generate_input_file.c | $(BIN_DIR)
 	$(CC) -o $(BIN_DIR)/generate_input_file $(OBJECTS) generate_input_file.c $(CFLAGS)
 
 generate_input_file: $(BIN_DIR)/generate_input_file ;
