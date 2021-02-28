@@ -111,7 +111,11 @@ void* producer_thread(void* _args) {
     producer_thread_t* producer_data = (producer_thread_t*) _args;
 
     llint total_numbers_read = 0;
-    while (!feof(producer_data->input_file)) {
+    llint total_numbers_on_file;
+
+    fread(&total_numbers_on_file, sizeof(llint), 1, producer_data->input_file);
+
+    while (total_numbers_read < total_numbers_on_file) {
         int* block_data = (int*) malloc(producer_data->block_size * sizeof(int));
 
         llint numbers_read = fread(block_data, sizeof(int), producer_data->block_size, producer_data->input_file);
