@@ -7,6 +7,7 @@
 #include <single_value.h>
 #include <triplets.h>
 #include <threads.h>
+#include <timer.h>
 #include <print_results.h>
 
 #define N_CONSUMERS 3
@@ -25,6 +26,9 @@ int main(int argc, char const *argv[])
         printf("Usage: %s <BLOCK_SIZE: N> <NUMBER_OF_BLOCKS: M> <INPUT_FILE>\n", argv[0]);
         exit(1);
     }
+
+    double t0;
+    double t1;
 
     llint buffer_block_size = atoll(argv[1]);
     llint buffer_capacity = atoll(argv[2]);
@@ -48,6 +52,8 @@ int main(int argc, char const *argv[])
     consumer_thread_t triplets_thread = new_consumer_thread(N_CONSUMERS, &shared_data, triplets_action);
     consumer_thread_t single_value_thread = new_consumer_thread(N_CONSUMERS, &shared_data, single_value_action);
 
+    GET_TIME(t0);
+    
     pthread_t pids[N_CONSUMERS + 1];
     start_producer_thread(&file_thread, &pids[0]);
     start_consumer_thread(&counting_seq_thread, &pids[1]);
@@ -58,9 +64,13 @@ int main(int argc, char const *argv[])
         pthread_join(pids[i], NULL);
     }
 
+    GET_TIME(t1);
+
     print_single_value(&single_value_data);
     print_triplets(&triplets_data);
     print_counting_seq(&counting_seq_data);
+
+    printf("Time: %lfs\n", t1 - t0);
 
     delete_thread_data(&shared_data);
     fclose(file);
