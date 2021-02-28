@@ -28,7 +28,7 @@ bool is_full(circular_buffer_t*);
 bool is_empty(circular_buffer_t*);
 
 void enqueue_block(circular_buffer_t*, buffer_block_t);
-void dequeue_block(circular_buffer_t*);
+buffer_block_t* dequeue_block(circular_buffer_t*);
 
 buffer_block_t* get_first_block(circular_buffer_t*);
 

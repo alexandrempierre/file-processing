@@ -44,11 +44,13 @@ void enqueue_block(circular_buffer_t* buffer, buffer_block_t block) {
     buffer->buffer_count++;
 }
 
-void dequeue_block(circular_buffer_t* buffer) {
-    assert(!is_empty(buffer));
+buffer_block_t* dequeue_block(circular_buffer_t* buffer) {
+    buffer_block_t* result = get_first_block(buffer);
 
     buffer->start_index = (buffer->start_index + 1) % buffer->buffer_capacity;
     buffer->buffer_count--;
+
+    return result;
 }
 
 buffer_block_t* get_first_block(circular_buffer_t* buffer) {

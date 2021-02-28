@@ -93,7 +93,8 @@ void wait_on_barrier(consumer_thread_t* consumer_data) {
     // NOTE: The last thread do the cleaning
     if(order == consumer_data->n_consumers) {
         thread_data->consumers_on_barrier = 0;
-        dequeue_block(thread_data->buffer);
+        buffer_block_t* block = dequeue_block(thread_data->buffer);
+        free(block->block_data);
 
         if(thread_data->file_has_ended && is_empty(thread_data->buffer)) {
             thread_data->no_more_work = true;
