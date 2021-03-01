@@ -9,7 +9,7 @@ number_of_executions = 5
 
 def main():
     
-    file_sizes = [30, 1000, 10000, 100000, 1000000, 10000000]#, 100000000]
+    file_sizes = [30, 1000, 10000, 100000, 1000000, 10000000, 100000000]
 
     min_times = {}
     max_times = {}
@@ -21,11 +21,13 @@ def main():
         verification_file_path = os.path.join("testes", f"{file_size}.txt")
         verification_data = get_verification_data(verification_file_path)
 
+        buffer_size_start = 2 if file_size < 100000000 else 1024
 
-        available_sizes = [i for i in powers_of_two_generator(file_size)]
+        available_block_sizes = [i for i in powers_of_two_generator(file_size)]
+        available_buffer_sizes = [i for i in powers_of_two_generator(file_size, buffer_size_start)]
 
-        available_combinations = [[i, j] for i in available_sizes
-                                         for j in available_sizes]
+        available_combinations = [[i, j] for i in available_block_sizes
+                                         for j in available_buffer_sizes]
 
 
         for index, combination in enumerate(available_combinations):
@@ -111,8 +113,8 @@ def find_max_time(best_times):
     (block_size, buffer_size) = current_max_key
     return [block_size, buffer_size, current_max_time]
 
-def powers_of_two_generator(upper_bound):
-    i = 2
+def powers_of_two_generator(upper_bound, start=2):
+    i = start
     while i <= upper_bound:
         yield i
         i *= 2
